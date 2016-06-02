@@ -35,8 +35,10 @@ ftp.get(remote_work_dir + r'/' + prm_log_name + r'.gz', prm_log_name + r'.gz')
 ftp.close()
 ssh.close()
 
-inF = gzip.open(prm_log_name + '.gz', 'rb')
-outF = open(prm_log_name, 'wb')
-outF.write(inF.read() )
+with gzip.open(prm_log_name + '.gz', 'rb') as inF:
+    with open(prm_log_name, 'wb') as outF:
+        for inline in inF:
+            outF.write(inline)
+
 inF.close()
 outF.close()
